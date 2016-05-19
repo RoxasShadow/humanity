@@ -11,9 +11,11 @@ impl<'a> Humanity {
 
 impl ToString for Humanity {
     fn to_string(&self) -> String {
-        let mut owner        = format!("/* OWNER */{}\n", self.owner.to_string());
-        let     contributors = format!("/* CONTRIBUTORS */{}", self.contributors.iter().map(|contributor| contributor.to_string()).collect::<String>());
-        owner.push_str(&*contributors);
+        let mut owner = format!("/* OWNER */{}\n", self.owner.to_string());
+        if !self.contributors.is_empty() {
+            let contributors = format!("/* CONTRIBUTORS */{}", self.contributors.iter().map(|contributor| contributor.to_string()).collect::<String>());
+            owner.push_str(&*contributors);
+        }
         owner.pop();
         owner
     }
