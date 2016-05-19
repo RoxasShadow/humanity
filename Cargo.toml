@@ -5,7 +5,7 @@ version = "0.1.0"
 authors = ["Giovanni Capuano <webmaster@giovannicapuano.net>"]
 license = "WTFPL"
 
-description = "Generate humans.txt from the GitHub's contributors list."
+description = "Generate humans.txt from given repository's contributors list."
 repository  = "https://github.com/RoxasShadow/humanity"
 keywords    = ["github"]
 

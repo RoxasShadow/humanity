@@ -1,7 +1,7 @@
 humanity [![Build Status](https://travis-ci.org/RoxasShadow/humanity.svg?branch=master)](https://travis-ci.org/RoxasShadow/humanity) [![crates.io](http://meritbadge.herokuapp.com/humanity)](https://crates.io/crates/humanity)
 ========
 
-Generate [humans.txt](http://humanstxt.org) from the GitHub's contributors list.
+Generate [humans.txt](http://humanstxt.org) from given repository's contributors list.
 
 # Usage
 To compile *humanity*, [Rust Nightly](https://www.rust-lang.org/downloads.html) is required.
