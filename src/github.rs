@@ -85,6 +85,6 @@ mod tests {
     #[test]
     fn test_get_from_github() {
        let humanity = Humanity::get_from::<GitHub>("RoxasShadow/manageiq.org");
-        assert!(!humanity.to_string().is_empty());
+       assert!(!humanity.to_string().is_empty());
     }
 }
