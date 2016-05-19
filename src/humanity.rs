@@ -16,8 +16,7 @@ impl ToString for Humanity {
             let contributors = format!("/* CONTRIBUTORS */{}", self.contributors.iter().map(|contributor| contributor.to_string()).collect::<String>());
             owner.push_str(&*contributors);
         }
-        owner.pop();
-        owner
+        owner.trim().to_owned()
     }
 }
 
