@@ -14,6 +14,7 @@ impl ToString for Humanity {
         let mut owner        = format!("/* OWNER */{}\n", self.owner.to_string());
         let     contributors = format!("/* CONTRIBUTORS */{}", self.contributors.iter().map(|contributor| contributor.to_string()).collect::<String>());
         owner.push_str(&*contributors);
+        owner.pop();
         owner
     }
 }
@@ -52,6 +53,13 @@ impl ToString for User {
             website = format!("Website: {}", website_);
         }
 
-        [name, profile_url, location, website, " ".to_string()].iter().filter_map(|s| if s.is_empty() { None } else { Some(format!("\n  {}", s)) }).collect()
+        [name, profile_url, location, website, " ".to_string()].iter().filter_map(|s| {
+            if s.is_empty() {
+                None
+            }
+            else {
+                Some(format!("\n  {}", s))
+            }
+        }).collect()
     }
 }
