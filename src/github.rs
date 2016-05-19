@@ -58,9 +58,10 @@ impl GitHub {
 
 impl HumanityBearer for GitHub {
     fn generate(repo: &str) -> Humanity {
+        let owner = GitHub::fetch_owner(repo);
         Humanity {
-            owner:        GitHub::fetch_owner(repo),
-            contributors: GitHub::fetch_contributors(repo)
+            owner:        owner.clone(),
+            contributors: GitHub::fetch_contributors(repo).into_iter().filter(|contributor| contributor.login != owner.login).collect()
         }
     }
 }
