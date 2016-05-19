@@ -23,15 +23,19 @@ struct Humanity {
 }
 
 impl<'a> Humanity {
-    pub fn as_bytes(&self) -> Vec<u8> {
-        vec![1] // TODO
-    }
-
-    fn from<B: HumanityBearer>(source: &'a str, path: &Path) -> IOResult<()> {
+    pub fn get_from<B: HumanityBearer>(source: &'a str, path: &Path) -> IOResult<()> {
         let mut file = try!(File::create(path));
         let contents = B::generate(source);
-        try!(file.write_all(&*contents.as_bytes()));
+        try!(file.write_all(&*contents.to_string().as_bytes()));
         Ok(())
+    }
+}
+
+impl ToString for Humanity {
+    fn to_string(&self) -> String {
+        format!("/* OWNER */\n{}/* CONTRIBUTORS */\n{}",
+                self.owner.to_string(),
+                self.contributors.iter().map(|contributor| contributor.to_string()).collect::<String>())
     }
 }
 
@@ -89,7 +93,7 @@ impl GitHub {
    pub fn fetch_contributors(repo: &str) -> Vec<User> {
         let url = format!("https://api.github.com/repos/{}/contributors", repo);
         let github_contributors: Vec<GitHubContributor> = Self::http_request(url).unwrap();
-        github_contributors.into_iter().map(|github_contributor| Self::fetch_user(github_contributor)).collect()
+        github_contributors.into_iter().map(Self::fetch_user).collect()
     }
 
     pub fn fetch_owner(repo: &str) -> User {
@@ -131,6 +135,8 @@ impl HumanityBearer for GitHub {
 #[cfg(test)]
 mod tests {
     use std::path::Path;
+    use std::io::prelude::*;
+    use std::fs::File;
 
     use super::Humanity;
     use super::GitHub;
@@ -149,6 +155,14 @@ mod tests {
 
     #[test]
     fn test_from() {
-        Humanity::from::<GitHub>("RoxasShadow/manageiq.org", &Path::new("a.txt"));
+        let path = Path::new("a.txt");
+        assert!(Humanity::get_from::<GitHub>("RoxasShadow/manageiq.org", &path).is_ok());
+
+        let f = File::open(path);
+        assert!(f.is_ok());
+
+        let mut s = String::new();
+        assert!(f.unwrap().read_to_string(&mut s).is_ok());
+        assert!(s.len() > 0);
     }
 }
