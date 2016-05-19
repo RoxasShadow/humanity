@@ -1,7 +1,13 @@
 [package]
 name    = "humanity"
 version = "0.1.0"
+
 authors = ["Giovanni Capuano <webmaster@giovannicapuano.net>"]
+license = "WTFPL"
+
+description = "Generate humans.txt from GitHub contributors."
+repository  = "https://github.com/RoxasShadow/humanity"
+keywords    = ["humans.txt", "github"]
 
 [dependencies]
 hyper = "0.9"
