@@ -7,7 +7,7 @@ license = "WTFPL"
 
 description = "Generate humans.txt from the GitHub's contributors list."
 repository  = "https://github.com/RoxasShadow/humanity"
-keywords    = ["humans.txt", "github"]
+keywords    = ["github"]
 
 [dependencies]
 hyper = "0.9"
