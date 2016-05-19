@@ -5,5 +5,8 @@ extern crate hyper;
 extern crate serde;
 extern crate serde_json;
 
-pub mod humanity;
-pub mod github;
+mod humanity;
+mod github;
+
+pub use humanity::{Humanity, HumanityBearer, User};
+pub use github::{GitHub, GitHubOwner, GitHubContributor};

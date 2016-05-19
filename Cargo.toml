@@ -8,3 +8,7 @@ hyper = "0.9"
 serde = "0.7"
 serde_json   = "0.7"
 serde_macros = "0.7"
+
+[[bin]]
+name = "humanity"
+path = "src/main.rs"
