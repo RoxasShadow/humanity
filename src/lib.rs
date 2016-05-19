@@ -7,9 +7,6 @@ extern crate serde_json;
 
 use std::env;
 use std::io::prelude::*;
-use std::io::Result as IOResult;
-use std::fs::File;
-use std::path::Path;
 
 use hyper::Client;
 use hyper::header::{Connection, UserAgent};
@@ -23,11 +20,8 @@ struct Humanity {
 }
 
 impl<'a> Humanity {
-    pub fn get_from<B: HumanityBearer>(source: &'a str, path: &Path) -> IOResult<()> {
-        let mut file = try!(File::create(path));
-        let contents = B::generate(source);
-        try!(file.write_all(&*contents.to_string().as_bytes()));
-        Ok(())
+    pub fn get_from<B: HumanityBearer>(source: &'a str) -> Self {
+        B::generate(source)
     }
 }
 
@@ -134,12 +128,7 @@ impl HumanityBearer for GitHub {
 
 #[cfg(test)]
 mod tests {
-    use std::path::Path;
-    use std::io::prelude::*;
-    use std::fs::File;
-
-    use super::Humanity;
-    use super::GitHub;
+    use super::{Humanity, GitHub};
 
     #[test]
     fn test_fetch_contributors() {
@@ -154,15 +143,8 @@ mod tests {
     }
 
     #[test]
-    fn test_from() {
-        let path = Path::new("a.txt");
-        assert!(Humanity::get_from::<GitHub>("RoxasShadow/manageiq.org", &path).is_ok());
-
-        let f = File::open(path);
-        assert!(f.is_ok());
-
-        let mut s = String::new();
-        assert!(f.unwrap().read_to_string(&mut s).is_ok());
-        assert!(s.len() > 0);
+    fn test_get_from_github() {
+        let humanity = Humanity::get_from::<GitHub>("RoxasShadow/manageiq.org");
+        assert!(!humanity.to_string().is_empty());
     }
 }
