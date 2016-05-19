@@ -27,9 +27,10 @@ impl<'a> Humanity {
 
 impl ToString for Humanity {
     fn to_string(&self) -> String {
-        format!("/* OWNER */\n{}/* CONTRIBUTORS */\n{}",
-                self.owner.to_string(),
-                self.contributors.iter().map(|contributor| contributor.to_string()).collect::<String>())
+        let mut owner        = format!("/* OWNER */{}\n", self.owner.to_string());
+        let     contributors = format!("/* CONTRIBUTORS */{}", self.contributors.iter().map(|contributor| contributor.to_string()).collect::<String>());
+        owner.push_str(&*contributors);
+        owner
     }
 }
 
@@ -50,25 +51,24 @@ struct User {
 
 impl ToString for User {
     fn to_string(&self) -> String {
+        let name = match self.name.to_owned() {
+            Some(name) => name,
+            _          => self.login.to_string()
+        };
+
+        let profile_url = format!("GitHub Profile: {}", self.profile_url);
+
         let mut location = String::new();
         if let Some(location_) = self.location.to_owned() {
-            location = format!("\nLocation: {}", location_);
+            location = format!("Location: {}", location_);
         }
 
         let mut website = String::new();
         if let Some(website_) = self.website.to_owned() {
-            website = format!("\nWebsite: {}", website_);
+            website = format!("Website: {}", website_);
         }
 
-        let name = match self.name.to_owned() {
-            Some(name) => name,
-            _          => self.login.to_owned()
-        };
-
-        format!("{}\n{}{}{}",
-                name,
-                format!("GitHub Profile: {}\n", self.profile_url),
-                location, website)
+        [name, profile_url, location, website, " ".to_string()].iter().filter_map(|s| if s.is_empty() { None } else { Some(format!("\n  {}", s)) }).collect()
     }
 }
 
