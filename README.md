@@ -16,6 +16,8 @@ What you have to do is just generating a new [token](https://github.com/settings
 a name, leave everything unchecked and press "Generate token") and run `export GITHUB_ACCESS_TOKEN=`,
 appending the received token.
 
+If you need access to your private repositories, check the "repo" flag for your token.
+
 # Customizations
 It's possible to create additional fetchers implenting the `HumanityBearer` trait and also redefining
 the output format using a custom implementation of `ToString` for `Humanity` and `User`.
