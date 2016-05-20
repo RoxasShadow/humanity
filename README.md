@@ -21,3 +21,6 @@ If you need access to your private repositories, check the "repo" flag for your 
 # Customizations
 It's possible to create additional fetchers implenting the `HumanityBearer` trait and also redefining
 the output format using a custom implementation of `ToString` for `Humanity` and `User`.
+
+# One last thing
+![;_;](https://pbs.twimg.com/media/Cimu_N5XIAESpG4.jpg:large)
